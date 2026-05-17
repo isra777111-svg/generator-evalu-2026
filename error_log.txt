@@ -1,0 +1,11 @@
+TypeError: Cannot read properties of undefined (reading 'trim')
+    at C:\Users\ROG\AppData\Local\Temp\tmp-8736-d0m2JrT69yew\file:\E:\2026_A\PDC_PRIMARIA_AAPI%20KEY%20v2\pdc-proyecto\netlify\functions\generate-pdc-word.js:166:90
+    at Array.map (<anonymous>)
+    at flushTable (C:\Users\ROG\AppData\Local\Temp\tmp-8736-d0m2JrT69yew\file:\E:\2026_A\PDC_PRIMARIA_AAPI%20KEY%20v2\pdc-proyecto\netlify\functions\generate-pdc-word.js:132:51)
+    at mdAParagraphs (C:\Users\ROG\AppData\Local\Temp\tmp-8736-d0m2JrT69yew\file:\E:\2026_A\PDC_PRIMARIA_AAPI%20KEY%20v2\pdc-proyecto\netlify\functions\generate-pdc-word.js:286:18)
+    at construirContenidoPDC (C:\Users\ROG\AppData\Local\Temp\tmp-8736-d0m2JrT69yew\file:\E:\2026_A\PDC_PRIMARIA_AAPI%20KEY%20v2\pdc-proyecto\netlify\functions\generate-pdc-word.js:378:12)
+    at Object.exports.handler (C:\Users\ROG\AppData\Local\Temp\tmp-8736-d0m2JrT69yew\file:\E:\2026_A\PDC_PRIMARIA_AAPI%20KEY%20v2\pdc-proyecto\netlify\functions\generate-pdc-word.js:425:30)
+    at executeLambdaFunc (C:\Users\ROG\AppData\Roaming\npm\node_modules\netlify-cli\node_modules\lambda-local\build\lambdalocal.js:355:51)
+    at Object._executeSync (C:\Users\ROG\AppData\Roaming\npm\node_modules\netlify-cli\node_modules\lambda-local\build\lambdalocal.js:380:13)
+    at C:\Users\ROG\AppData\Roaming\npm\node_modules\netlify-cli\node_modules\lambda-local\build\lambdalocal.js:96:26
+    at new Promise (<anonymous>)

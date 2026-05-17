@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador Evaluaciones 2026 - ICG Software</title>
+    <link rel="icon" type="image/png" href="img/icono.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.21/mammoth.browser.min.js"></script>
+    <style>
+        .source-tab.active {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+
+<body class="p-4 md:p-8">
+    <div id="login-screen" class="login-container" style="display: none;">
+        <div class="login-card">
+            <h2>Acceso al Sistema</h2>
+            <p>Ingrese su contraseña para continuar</p>
+            <div class="input-group">
+                <input type="password" id="login-password" class="input-style" placeholder="Contraseña">
+                <button type="button" id="toggle-password" class="toggle-password-btn"
+                    title="Mostrar/Ocultar contraseña">👁️</button>
+            </div>
+            <div id="login-error" class="login-error"></div>
+            <button type="button" onclick="verificarLogin()" class="btn-primary mt-2">Ingresar</button>
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto animate-fade-in" id="main-app" style="display: none;">
+        <header class="text-center mb-16 relative">
+            <div
+                class="absolute -top-10 left-1/2 -translate-x-1/2 blur-3xl opacity-20 w-64 h-64 bg-blue-600 rounded-full -z-10">
+            </div>
+            <div class="mb-8 flex justify-center">
+                <img src="img/logo.png" alt="Logo Institucional"
+                    class="h-16 md:h-20 object-contain filter drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:scale-105 transition-transform duration-500"
+                    onerror="this.style.display='none'">
+            </div>
+
+            <div
+                class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full mb-6">
+                <i data-lucide="shield-check" class="w-4 h-4 text-blue-400"></i>
+                <span class="text-[10px] font-bold tracking-[0.2em] text-blue-400 uppercase">Sistema de
+                    Evaluaciones</span>
+            </div>
+
+            <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-4 leading-tight tracking-tight">
+                GENERADOR DE <span class="bg-gradient-to-r from-sky-400 to-emerald-500 bg-clip-text text-transparent">
+                    EVALUACIONES 2026</span>
+            </h1>
+
+            <div class="header-line"></div>
+        </header>
+
+        <form id="evalForm" class="space-y-8">
+            <!-- I. Datos Referenciales -->
+            <div class="section-card">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
+                        <i data-lucide="database" class="w-6 h-6 text-emerald-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-white uppercase tracking-tight">I. Datos Referenciales</h2>
+                        <p class="text-xs text-slate-500">Información administrativa de la evaluación</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="space-y-1">
+                        <label class="label-style">Unidad Educativa</label>
+                        <div class="relative">
+                            <i data-lucide="school"
+                                class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+                            <input type="text" id="ue" class="input-style pl-10" placeholder="Nombre de la institución">
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="label-style">Materia</label>
+                        <div class="relative">
+                            <i data-lucide="book-open"
+                                class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+                            <input type="text" id="materia" class="input-style pl-10" placeholder="Ej. Matemática">
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="label-style">Nivel Educativo <span class="text-red-400">*</span></label>
+                        <div class="relative">
+                            <i data-lucide="graduation-cap"
+                                class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+                            <select id="nivel_educativo" class="input-style pl-10 appearance-none" required>
+                                <option value="" disabled selected>Seleccione el nivel...</option>
+                                <option value="Primaria">Primaria</option>
+                                <option value="Secundaria">Secundaria</option>
+                                <option value="Superior">Superior</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="label-style">Curso</label>
+                        <div class="relative">
+                            <i data-lucide="layers"
+                                class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+                            <input type="text" id="curso" class="input-style pl-10" placeholder="Ej. 5to de Primaria">
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="label-style">Cantidad de Preguntas</label>
+                        <div class="relative">
+                            <i data-lucide="hash"
+                                class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+                            <input type="number" id="cantidad_preguntas" class="input-style pl-10" min="1" max="50"
+                                placeholder="Ej. 10">
+                        </div>
+                    </div>
+                    <div class="space-y-2 md:col-span-2 lg:col-span-3">
+                        <label class="label-style">Tipo de Preguntas <span
+                                class="text-xs text-slate-500 font-normal ml-2">(Seleccione uno o varios)</span></label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 bg-black/20 p-4 rounded-xl border border-white/5"
+                            id="tipo_preguntas_container">
+                            <label class="flex items-center gap-2 cursor-pointer group">
+                                <input type="checkbox" value="Opción múltiple"
+                                    class="tipo-pregunta-cb w-4 h-4 rounded border-slate-600 text-emerald-500 bg-slate-800 focus:ring-emerald-500 focus:ring-offset-0"
+                                    checked>
+                                <span class="text-sm text-slate-300 group-hover:text-white transition-colors">Opción
+                                    múltiple</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer group">
+                                <input type="checkbox" value="Verdadero y falso"
+                                    class="tipo-pregunta-cb w-4 h-4 rounded border-slate-600 text-emerald-500 bg-slate-800 focus:ring-emerald-500 focus:ring-offset-0">
+                                <span class="text-sm text-slate-300 group-hover:text-white transition-colors">Verdadero y
+                                    falso</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer group">
+                                <input type="checkbox" value="Completar"
+                                    class="tipo-pregunta-cb w-4 h-4 rounded border-slate-600 text-emerald-500 bg-slate-800 focus:ring-emerald-500 focus:ring-offset-0">
+                                <span
+                                    class="text-sm text-slate-300 group-hover:text-white transition-colors">Completar</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer group">
+                                <input type="checkbox" value="Relación de columnas"
+                                    class="tipo-pregunta-cb w-4 h-4 rounded border-slate-600 text-emerald-500 bg-slate-800 focus:ring-emerald-500 focus:ring-offset-0">
+                                <span class="text-sm text-slate-300 group-hover:text-white transition-colors">Relación de
+                                    columnas</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer group">
+                                <input type="checkbox" value="Desarrollo"
+                                    class="tipo-pregunta-cb w-4 h-4 rounded border-slate-600 text-emerald-500 bg-slate-800 focus:ring-emerald-500 focus:ring-offset-0">
+                                <span
+                                    class="text-sm text-slate-300 group-hover:text-white transition-colors">Desarrollo</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer group">
+                                <input type="checkbox" value="Resolución de ejercicios"
+                                    class="tipo-pregunta-cb w-4 h-4 rounded border-slate-600 text-emerald-500 bg-slate-800 focus:ring-emerald-500 focus:ring-offset-0">
+                                <span class="text-sm text-slate-300 group-hover:text-white transition-colors">Resolución
+                                    de ejercicios</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer group">
+                                <input type="checkbox" value="Preguntas cortas"
+                                    class="tipo-pregunta-cb w-4 h-4 rounded border-slate-600 text-emerald-500 bg-slate-800 focus:ring-emerald-500 focus:ring-offset-0">
+                                <span class="text-sm text-slate-300 group-hover:text-white transition-colors">Preguntas
+                                    cortas</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- II. Fuentes para Generar la Evaluación -->
+            <div class="section-card border-l-4 border-l-sky-500/30">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="p-3 bg-sky-500/10 rounded-xl border border-sky-500/20">
+                        <i data-lucide="cpu" class="w-6 h-6 text-sky-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-white uppercase tracking-tight">II. Fuentes de Generación</h2>
+                        <p class="text-xs text-slate-500">Seleccione el método para generar el contenido de la evaluación
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="source-tab active cursor-pointer p-3 border border-white/10 rounded-xl text-center hover:bg-white/5 transition-all"
+                        onclick="selectSource('document')">
+                        <i data-lucide="file-text" class="w-6 h-6 mx-auto mb-2 text-slate-400"></i>
+                        <span class="text-xs font-bold text-white">Documento</span>
+                    </div>
+                    <div class="source-tab cursor-pointer p-3 border border-white/10 rounded-xl text-center hover:bg-white/5 transition-all"
+                        onclick="selectSource('text')">
+                        <i data-lucide="type" class="w-6 h-6 mx-auto mb-2 text-slate-400"></i>
+                        <span class="text-xs font-bold text-white">Texto Manual</span>
+                    </div>
+                    <div class="source-tab cursor-pointer p-3 border border-white/10 rounded-xl text-center hover:bg-white/5 transition-all"
+                        onclick="selectSource('image')">
+                        <i data-lucide="image" class="w-6 h-6 mx-auto mb-2 text-slate-400"></i>
+                        <span class="text-xs font-bold text-white">Imágenes</span>
+                    </div>
+                    <div class="source-tab cursor-pointer p-3 border border-white/10 rounded-xl text-center hover:bg-white/5 transition-all"
+                        onclick="selectSource('topic')">
+                        <i data-lucide="message-square" class="w-6 h-6 mx-auto mb-2 text-slate-400"></i>
+                        <span class="text-xs font-bold text-white">Por Tema</span>
+                    </div>
+                </div>
+
+                <input type="hidden" id="source_type" value="document">
+
+                <div id="source_document" class="space-y-4 source-container">
+                    <div class="border-2 border-dashed border-slate-700 bg-black/20 p-8 text-center rounded-xl hover:border-sky-500/50 transition-colors cursor-pointer"
+                        onclick="document.getElementById('file_document').click()">
+                        <i data-lucide="upload-cloud" class="w-10 h-10 mx-auto text-sky-400 mb-3"></i>
+                        <p class="text-sm font-medium text-white mb-1">Haz clic para subir documento Word o PDF</p>
+                        <p class="text-xs text-slate-500">Max 5MB</p>
+                        <input type="file" id="file_document" accept=".docx,.pdf" class="hidden"
+                            onchange="handleFileDisplay('file_document', 'doc_display')">
+                    </div>
+                    <div id="doc_display" class="text-sm text-sky-300 font-medium text-center hidden"></div>
+                </div>
+
+                <div id="source_text" class="space-y-4 source-container hidden">
+                    <label class="label-style">Pegue aquí la teoría o contenido base</label>
+                    <textarea id="text_manual" class="input-style resize-y min-h-[150px] p-4"
+                        placeholder="Pegue la teoría para generar preguntas..."></textarea>
+                </div>
+
+                <div id="source_image" class="space-y-4 source-container hidden">
+                    <div class="border-2 border-dashed border-slate-700 bg-black/20 p-8 text-center rounded-xl hover:border-sky-500/50 transition-colors cursor-pointer"
+                        onclick="document.getElementById('file_image').click()">
+                        <i data-lucide="image-plus" class="w-10 h-10 mx-auto text-sky-400 mb-3"></i>
+                        <p class="text-sm font-medium text-white mb-1">Sube capturas o fotos de ejercicios</p>
+                        <p class="text-xs text-slate-500">JPG, PNG (Max 5MB)</p>
+                        <input type="file" id="file_image" accept="image/*" class="hidden"
+                            onchange="handleFileDisplay('file_image', 'img_display', 'img_instructions_container')">
+                    </div>
+                    <div id="img_display" class="text-sm text-sky-300 font-medium text-center hidden"></div>
+                    <div id="img_instructions_container" class="hidden animate-fade-in">
+                        <label class="label-style">Instrucciones complementarias (Opcional)</label>
+                        <input type="text" id="img_instructions" class="input-style"
+                            placeholder="Ej. Genera preguntas enfocadas solo en la parte inferior de la imagen...">
+                    </div>
+                </div>
+
+                <div id="source_topic" class="space-y-4 source-container hidden">
+                    <label class="label-style">Indique el tema para generar toda la evaluación</label>
+                    <input type="text" id="text_topic" class="input-style"
+                        placeholder="Ej. El Sistema Solar y los Planetas">
+                </div>
+            </div>
+
+            <button type="button" onclick="generarEvaluacion()" id="btn-generar"
+                class="group w-full btn-primary flex items-center justify-center gap-3 py-5 overflow-hidden relative">
+                <div
+                    class="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-12">
+                </div>
+                <i data-lucide="sparkles" class="w-6 h-6"></i>
+                <span>GENERAR EVALUACIÓN CON IA</span>
+            </button>
+        </form>
+
+        <!-- Resultado -->
+        <div id="results-panel" class="hidden mt-12 animate-fade-in-up">
+            <div
+                class="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-black/40 backdrop-blur-xl p-6 md:p-10 shadow-[0_0_40px_rgba(139,92,246,0.1)]">
+                <div
+                    class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-50">
+                </div>
+                <div class="absolute -top-24 -right-24 w-64 h-64 bg-emerald-600/20 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-sky-600/20 rounded-full blur-3xl"></div>
+
+                <div class="relative z-10">
+                    <div
+                        class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-white/10">
+                        <div class="flex items-center gap-4">
+                            <div class="relative shrink-0">
+                                <div
+                                    class="absolute inset-0 bg-emerald-500 rounded-full blur-md animate-pulse opacity-50">
+                                </div>
+                                <div
+                                    class="relative w-14 h-14 bg-emerald-500/20 rounded-full border border-emerald-500/50 flex items-center justify-center">
+                                    <i data-lucide="cpu" class="w-7 h-7 text-emerald-300"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h2
+                                    class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-3">
+                                    Generación de Evaluación
+                                    <span class="flex h-3 w-3 relative">
+                                        <span
+                                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                                    </span>
+                                </h2>
+                                <p class="text-sm text-slate-400 mt-1">La Inteligencia Artificial está estructurando el
+                                    documento</p>
+                            </div>
+                        </div>
+                        <div id="api-provider-badge"
+                            class="hidden items-center gap-2 bg-indigo-500/10 border border-indigo-500/30 px-4 py-2 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.1)]">
+                            <div class="w-2.5 h-2.5 rounded-full bg-indigo-400 animate-pulse"></div>
+                            <span
+                                class="text-xs font-black text-indigo-300 uppercase tracking-widest badge-text"></span>
+                        </div>
+                    </div>
+
+                    <!-- BARRA DE PROGRESO -->
+                    <div id="progress-container" class="mb-8 hidden">
+                        <div class="flex justify-between items-end mb-4">
+                            <span
+                                class="text-emerald-200 font-medium text-sm md:text-base tracking-wide flex items-center gap-2">
+                                <i data-lucide="loader" class="w-4 h-4 animate-spin"></i> <span
+                                    id="progress-text">Iniciando sistema...</span>
+                            </span>
+                            <span id="progress-percent"
+                                class="text-4xl md:text-5xl font-black text-white tracking-tighter drop-shadow-lg">0%</span>
+                        </div>
+                        <div
+                            class="w-full bg-slate-900/80 rounded-full h-4 md:h-5 border border-white/5 overflow-hidden relative shadow-inner">
+                            <div id="progress-bar"
+                                class="h-full bg-gradient-to-r from-emerald-600 via-teal-500 to-sky-400 rounded-full transition-all duration-[800ms] ease-out relative shadow-[0_0_20px_rgba(139,92,246,0.6)]"
+                                style="width: 0%">
+                                <div
+                                    class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxwYXRoIGQ9Ik0wIDIwaDIwVjBIMHoiIGZpbGw9Im5vbmUiLz4KPHBhdGggZD0iTTAgMjBMMjAgMEgxMExwIDEwaC0xMHoiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xNSkiLz4KPC9zdmc+')] opacity-60 animate-[slide_1s_linear_infinite]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <style>
+                        @keyframes slide {
+                            from {
+                                background-position: 0 0;
+                            }
+
+                            to {
+                                background-position: 20px 0;
+                            }
+                        }
+
+                        .animate-fade-in-up {
+                            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                        }
+
+                        @keyframes fadeInUp {
+                            from {
+                                opacity: 0;
+                                transform: translateY(30px) scale(0.98);
+                            }
+
+                            to {
+                                opacity: 1;
+                                transform: translateY(0) scale(1);
+                            }
+                        }
+                    </style>
+
+                    <div id="generation-log"
+                        class="space-y-3 max-h-64 overflow-y-auto custom-scrollbar pr-3 font-mono text-xs md:text-sm bg-black/30 p-4 rounded-2xl border border-white/5">
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTONES DE ACCIÓN -->
+            <div id="action-buttons"
+                class="hidden mt-8 flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
+                <button onclick="descargarWord()"
+                    class="group relative px-8 py-5 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(139,92,246,0.4)] hover:shadow-[0_0_45px_rgba(139,92,246,0.6)] hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 w-full sm:w-auto min-w-[280px]"
+                    id="btn-word">
+                    <div
+                        class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-12">
+                    </div>
+                    <i data-lucide="download" class="w-6 h-6 text-white relative z-10"></i>
+                    <span
+                        class="text-white font-black tracking-widest text-sm md:text-base relative z-10 uppercase">Descargar
+                        Evaluación en Word</span>
+                </button>
+                <button onclick="nuevaEvaluacion()"
+                    class="px-8 py-5 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-3 font-bold tracking-widest uppercase text-sm md:text-base w-full sm:w-auto min-w-[200px]">
+                    <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                    Nueva Evaluación
+                </button>
+            </div>
+        </div>
+
+        <footer class="mt-16 pb-8 text-center text-slate-500 text-xs border-t border-white/5 pt-8">
+            <p class="font-bold tracking-widest text-slate-400 mb-1">© 2026 ICG SOFTWARE GROUP • SOLUCIONES EDUCATIVAS
+            </p>
+            <p>Israel Condori Gonzales - Lead Developer</p>
+        </footer>
+    </div>
+    <script src="login.js"></script>
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
