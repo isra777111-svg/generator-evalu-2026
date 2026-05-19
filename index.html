@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador Evaluaciones 2026 - ICG Software</title>
     <link rel="icon" type="image/png" href="img/icono.png">
+    <link rel="shortcut icon" type="image/png" href="img/icono.png">
+    <link rel="apple-touch-icon" href="img/icono.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
@@ -115,7 +117,7 @@
                         <div class="relative">
                             <i data-lucide="hash"
                                 class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
-                            <input type="number" id="cantidad_preguntas" class="input-style pl-10" min="1" max="50"
+                            <input type="number" id="cantidad_preguntas" class="input-style pl-10" min="1" max="35"
                                 placeholder="Ej. 10">
                         </div>
                     </div>
@@ -134,7 +136,8 @@
                             <label class="flex items-center gap-2 cursor-pointer group">
                                 <input type="checkbox" value="Verdadero y falso"
                                     class="tipo-pregunta-cb w-4 h-4 rounded border-slate-600 text-emerald-500 bg-slate-800 focus:ring-emerald-500 focus:ring-offset-0">
-                                <span class="text-sm text-slate-300 group-hover:text-white transition-colors">Verdadero y
+                                <span class="text-sm text-slate-300 group-hover:text-white transition-colors">Verdadero
+                                    y
                                     falso</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer group">
@@ -146,7 +149,8 @@
                             <label class="flex items-center gap-2 cursor-pointer group">
                                 <input type="checkbox" value="Relación de columnas"
                                     class="tipo-pregunta-cb w-4 h-4 rounded border-slate-600 text-emerald-500 bg-slate-800 focus:ring-emerald-500 focus:ring-offset-0">
-                                <span class="text-sm text-slate-300 group-hover:text-white transition-colors">Relación de
+                                <span class="text-sm text-slate-300 group-hover:text-white transition-colors">Relación
+                                    de
                                     columnas</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer group">
@@ -180,7 +184,8 @@
                     </div>
                     <div>
                         <h2 class="text-xl font-bold text-white uppercase tracking-tight">II. Fuentes de Generación</h2>
-                        <p class="text-xs text-slate-500">Seleccione el método para generar el contenido de la evaluación
+                        <p class="text-xs text-slate-500">Seleccione el método para generar el contenido de la
+                            evaluación
                         </p>
                     </div>
                 </div>
@@ -232,7 +237,8 @@
                     <div class="border-2 border-dashed border-slate-700 bg-black/20 p-8 text-center rounded-xl hover:border-sky-500/50 transition-colors cursor-pointer"
                         onclick="document.getElementById('file_image').click()">
                         <i data-lucide="image-plus" class="w-10 h-10 mx-auto text-sky-400 mb-3"></i>
-                        <p class="text-sm font-medium text-white mb-1">Sube capturas o fotos de ejercicios</p>
+                        <p class="text-sm font-medium text-white mb-1">Haz Clic para subir capturas o fotos de
+                            ejercicios</p>
                         <p class="text-xs text-slate-500">JPG, PNG (Max 5MB)</p>
                         <input type="file" id="file_image" accept="image/*" class="hidden"
                             onchange="handleFileDisplay('file_image', 'img_display', 'img_instructions_container')">
@@ -241,7 +247,7 @@
                     <div id="img_instructions_container" class="hidden animate-fade-in">
                         <label class="label-style">Instrucciones complementarias (Opcional)</label>
                         <input type="text" id="img_instructions" class="input-style"
-                            placeholder="Ej. Genera preguntas enfocadas solo en la parte inferior de la imagen...">
+                            placeholder="Ej. Genera preguntas enfocadas solo en...">
                     </div>
                 </div>
 

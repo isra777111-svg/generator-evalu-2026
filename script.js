@@ -39,6 +39,13 @@ function selectSource(sourceId) {
     if (extraContainer) extraContainer.classList.add('hidden');
     const imgInst = document.getElementById('img_instructions');
     if (imgInst) imgInst.value = '';
+    
+    // Autofocus para mejorar experiencia de usuario
+    if (sourceId === 'text') {
+        setTimeout(() => document.getElementById('text_manual')?.focus(), 50);
+    } else if (sourceId === 'topic') {
+        setTimeout(() => document.getElementById('text_topic')?.focus(), 50);
+    }
 }
 
 async function handleFileDisplay(inputId, displayId, extraContainerId = null) {
@@ -251,6 +258,11 @@ async function generarEvaluacion() {
 
     if (!formData.tipo_preguntas) {
         alert("Por favor seleccione al menos un Tipo de Pregunta.");
+        return;
+    }
+
+    if (parseInt(formData.cantidad_preguntas) > 35) {
+        alert("El sistema permite generar un máximo de 35 preguntas por evaluación.");
         return;
     }
 
